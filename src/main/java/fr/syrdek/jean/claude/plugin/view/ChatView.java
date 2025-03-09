@@ -1,5 +1,7 @@
 package fr.syrdek.jean.claude.plugin.view;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.eclipse.swt.SWT;
@@ -8,13 +10,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.part.ViewPart;
 
+import com.google.gson.Gson;
+
+import fr.syrdek.jean.claude.plugin.client.ollama.OllamaMessage;
+
 public class ChatView extends ViewPart {
 
   /**
    * The ID of the view as specified by the extension.
    */
   public static final String ID = "fr.syrdek.jean.claude.plugin.view.ChatView";
-
+  private final Gson gson = new Gson();
   private MarkdownViewer markdown;
 
   @Inject
@@ -28,8 +34,8 @@ public class ChatView extends ViewPart {
     markdown = new MarkdownViewer(parent, SWT.MULTI);
   }
 
-  public void setMarkdown(final String text) {
-    markdown.setMarkdown(text);
+  public void setConversationHistory(final List<OllamaMessage> messages) {
+    markdown.setConversationHistory(gson.toJson(messages));
   }
 
   @Override
@@ -39,9 +45,5 @@ public class ChatView extends ViewPart {
 
   public void setError(String message) {
     markdown.setError(message);
-  }
-
-  public void setWaiting() {
-    markdown.setWaiting();
   }
 }

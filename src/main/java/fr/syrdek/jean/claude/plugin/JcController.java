@@ -3,22 +3,26 @@
  */
 package fr.syrdek.jean.claude.plugin;
 
-import java.util.Objects;
-import java.util.stream.Stream;
+import java.util.List;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-import fr.syrdek.jean.claude.plugin.client.gradio.GradioClient;
-import fr.syrdek.jean.claude.plugin.client.gradio.PredictEvent;
+import fr.syrdek.jean.claude.plugin.client.HistoryChangeListener;
+import fr.syrdek.jean.claude.plugin.client.LlmClient;
+import fr.syrdek.jean.claude.plugin.client.ollama.OllamaClient;
+import fr.syrdek.jean.claude.plugin.client.ollama.OllamaMessage;
 import fr.syrdek.jean.claude.plugin.view.ChatView;
 
 /**
  * 
  */
 public class JcController {
-  private static GradioClient CLIENT = new GradioClient(Activator.getUrl());
+  private static LlmClient CLIENT;
+  static {
+    setUrl(Activator.getUrl(), Activator.getType());
+  }
 
   public static ChatView activateChatView() {
     try {
@@ -29,20 +33,11 @@ public class JcController {
   }
 
   public static void predict(final String predict) {
-    final ChatView view = activateChatView();
-    view.setWaiting();
+    CLIENT.ask(predict);
+  }
 
-    CLIENT.predict(predict)
-        .thenAccept((Stream<PredictEvent> stream) -> {
-          stream.map(PredictEvent::getGeneratedResponse)
-              .filter(Objects::nonNull)
-              .forEach((final String mkdown) -> Display.getDefault().asyncExec(() -> {
-                view.setMarkdown(mkdown);
-              }));
-        }).exceptionally((Throwable t) -> {
-          view.setError(t.getMessage());
-          return null;
-        });
+  public static void clear() {
+    CLIENT.clearHistory();
   }
 
   public static void explainCode(final String code) {
@@ -65,7 +60,27 @@ public class JcController {
     super();
   }
 
-  public static void setUrl(String url) {
-    CLIENT = new GradioClient(url);
+  public static void setUrl(String url, String type) {
+    if (CLIENT != null) {
+      CLIENT.stop();
+    }
+
+    CLIENT = new OllamaClient(url);
+    CLIENT.setHistoryListener(new HistoryChangeListener() {
+
+      @Override
+      public void onError(String error) {
+        Display.getDefault().asyncExec(() -> {
+          activateChatView().setError(error);
+        });
+      }
+
+      @Override
+      public void onChange(List<OllamaMessage> chatHistory) {
+        Display.getDefault().asyncExec(() -> {
+          activateChatView().setConversationHistory(chatHistory);
+        });
+      }
+    });
   }
 }

@@ -15,7 +15,7 @@ public class ExplainHandler extends JeanClaudeHandler {
   public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell s) throws Exception {
     final ITextSelection currentSelection = getCurrentSelection();
     if (currentSelection != null) {
-      JcController.explainCode(currentSelection.getText());
+      JcController.explainCode("\n" + currentSelection.getText() + "\n");
     }
   }
 }

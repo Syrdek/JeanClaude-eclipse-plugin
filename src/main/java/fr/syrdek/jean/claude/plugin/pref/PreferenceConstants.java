@@ -8,6 +8,9 @@ public class PreferenceConstants {
   public static final String P_URL = "jeanclaudeUrl";
   public static final String DEFAULT_URL = "http://localhost:7890";
 
+  public static final String P_TYPE = "jeanclaudeType";
+  public static final String DEFAULT_TYPE = "ollama"; // ollama/gradio
+
   public static final String P_EXPLAIN_TPL = "explainTpl";
   public static final String DEFAULT_EXPLAIN_TPL = "Explique le code suivant : ```[SELECTED_TEXT]```";
 

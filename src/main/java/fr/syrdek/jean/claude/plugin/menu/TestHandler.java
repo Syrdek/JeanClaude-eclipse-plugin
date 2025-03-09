@@ -15,7 +15,7 @@ public class TestHandler extends JeanClaudeHandler {
   public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell s) throws Exception {
     final ITextSelection currentSelection = getCurrentSelection();
     if (currentSelection != null) {
-      JcController.genererTest(currentSelection.getText());
+      JcController.genererTest("\n" + currentSelection.getText() + "\n");
     }
   }
 }

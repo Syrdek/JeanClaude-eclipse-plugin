@@ -15,7 +15,7 @@ public class CheckHandler extends JeanClaudeHandler {
   public void execute(@Named(IServiceConstants.ACTIVE_SHELL) Shell s) throws Exception {
     final ITextSelection currentSelection = getCurrentSelection();
     if (currentSelection != null) {
-      JcController.verifierCode(currentSelection.getText());
+      JcController.verifierCode("\n" + currentSelection.getText() + "\n");
     }
   }
 }

@@ -28,6 +28,10 @@ public class Activator extends AbstractUIPlugin {
     return getDefault().getPreferenceStore().getString(PreferenceConstants.P_URL);
   }
 
+  public static String getType() {
+    return getDefault().getPreferenceStore().getString(PreferenceConstants.P_TYPE);
+  }
+
   public static String getExplainPhrase(final String code) {
     return getDefault().getPreferenceStore().getString(PreferenceConstants.P_EXPLAIN_TPL).replace("[SELECTED_TEXT]", code);
   }

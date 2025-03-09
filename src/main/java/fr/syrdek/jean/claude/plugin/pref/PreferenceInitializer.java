@@ -18,6 +18,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
   public void initializeDefaultPreferences() {
     final IPreferenceStore store = Activator.getDefault().getPreferenceStore();
     store.setDefault(PreferenceConstants.P_URL, PreferenceConstants.DEFAULT_URL);
+    store.setDefault(PreferenceConstants.P_TYPE, PreferenceConstants.DEFAULT_TYPE);
     store.setDefault(PreferenceConstants.P_EXPLAIN_TPL, PreferenceConstants.DEFAULT_EXPLAIN_TPL);
     store.setDefault(PreferenceConstants.P_COMMENT_TPL, PreferenceConstants.DEFAULT_COMMENT_TPL);
     store.setDefault(PreferenceConstants.P_TEST_TPL, PreferenceConstants.DEFAULT_TEST_TPL);

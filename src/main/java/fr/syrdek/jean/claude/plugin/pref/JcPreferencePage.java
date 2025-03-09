@@ -34,6 +34,8 @@ public class JcPreferencePage
     addField(
         new StringFieldEditor(PreferenceConstants.P_URL, "JeanClaude URL", getFieldEditorParent()));
     addField(
+        new StringFieldEditor(PreferenceConstants.P_TYPE, "Backend type (ollama / gradio)", getFieldEditorParent()));
+    addField(
         new StringFieldEditor(PreferenceConstants.P_EXPLAIN_TPL, "Explain template", getFieldEditorParent()));
     addField(
         new StringFieldEditor(PreferenceConstants.P_COMMENT_TPL, "Comment template", getFieldEditorParent()));
@@ -53,7 +55,7 @@ public class JcPreferencePage
 
   @Override
   public boolean performOk() {
-    JcController.setUrl(getPreferenceStore().getString(PreferenceConstants.P_URL));
+    JcController.setUrl(getPreferenceStore().getString(PreferenceConstants.P_URL), getPreferenceStore().getString(PreferenceConstants.P_TYPE));
     return super.performOk();
   }
 

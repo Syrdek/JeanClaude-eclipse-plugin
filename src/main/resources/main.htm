@@ -1,0 +1,32 @@
+<html>
+
+<head>
+	<!-- main css -->
+	<link rel="stylesheet" href="jeanclaude.css">
+	<!-- highlight theme -->
+	<link rel="stylesheet" href="dark.min.css">
+
+	<!-- allow to frmat markdown into html -->
+	<script type="text/javascript" src="showdown.min.js"></script>
+	<!-- allow syntax highlighting -->
+	<script type="text/javascript" src="highlight.min.js"></script>
+</head>
+
+<body class="dark" onload="jc.init()">
+	<div id="jeanclaude" class="jc"></div>
+	
+	<div id="jc-controls" class="jc-controls">
+		<textarea id="jc-chat-area" minlength="1" placeholder="Tell me something..."></textarea>
+		<div class="jc-buttons-bar">
+			<button onclick="jc.clear(); plugin_clear();" class="jc-clear-btn">Clear</button>
+			<button onclick="plugin_tell(document.querySelector('#jc-chat-area').value);" class="jc-tell-btn" id="jc-tell-btn">Tell</button>
+		</div>
+	</div>
+</body>
+
+<!-- this script mimics the actions that should be defined when this page is used in a plugin -->
+<script type="text/javascript" src="plugin_glue.js"></script>
+<!-- script containing the chat management -->
+<script type="text/javascript" src="jeanclaude.js"></script>
+
+</html>
