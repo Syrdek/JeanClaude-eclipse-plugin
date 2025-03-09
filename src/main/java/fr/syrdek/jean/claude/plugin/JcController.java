@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-import fr.syrdek.jean.claude.plugin.client.HistoryChangeListener;
 import fr.syrdek.jean.claude.plugin.client.LlmClient;
 import fr.syrdek.jean.claude.plugin.client.ollama.OllamaClient;
 import fr.syrdek.jean.claude.plugin.client.ollama.OllamaMessage;
@@ -66,21 +65,13 @@ public class JcController {
     }
 
     CLIENT = new OllamaClient(url);
-    CLIENT.setHistoryListener(new HistoryChangeListener() {
-
-      @Override
-      public void onError(String error) {
-        Display.getDefault().asyncExec(() -> {
-          activateChatView().setError(error);
-        });
-      }
-
-      @Override
-      public void onChange(List<OllamaMessage> chatHistory) {
-        Display.getDefault().asyncExec(() -> {
-          activateChatView().setConversationHistory(chatHistory);
-        });
-      }
+    CLIENT.setErrorListener((String error) -> Display.getDefault().asyncExec(() -> {
+      activateChatView().setError(error);
+    }));
+    CLIENT.setHistoryListener((List<OllamaMessage> chatHistory) -> {
+      Display.getDefault().asyncExec(() -> {
+        activateChatView().setConversationHistory(chatHistory);
+      });
     });
   }
 }

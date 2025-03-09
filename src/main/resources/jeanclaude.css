@@ -1,6 +1,6 @@
 body {
 	background-color: #232330;
-	color: #D9C9F7;
+	color: #D9E9D7;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
@@ -50,7 +50,7 @@ body {
 }
 
 .jc-role-user {
-	background-color: #624213;
+	background-color: #124283;
 }
 
 .jc-role-assistant {
@@ -137,7 +137,7 @@ body {
 	background-color: #525263;
 	border: 1px solid #322263;
 	border-radius: 5px;
-	color: #D9C9F7;
+	color: #D9E9D7
 }
 
 .jc-buttons-bar {
@@ -146,6 +146,7 @@ body {
 	display: flex;
 	flex-direction: row;
   	align-items: stretch;
+  	gap: 30px;
 }
 
 .jc-buttons-bar>*{
@@ -155,13 +156,70 @@ body {
 
 .jc-clear-btn {
 	background: #a31700;
-	color: #D9C9F7;
+	color: #D9E9D7;
 }
 
 .jc-tell-btn {
-	background: #624213;
-	color: #D9C9F7;
+	background: #328233;
+	color: #D9E9D7;
 }
+
+
+/**********************/
+/** Material buttons **/
+/**********************/
+.mat-btn {
+  position: relative;
+
+  display: block;
+  padding: 0;
+
+  overflow: hidden;
+
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+  
+  color: #ecf0f1;
+  
+  transition: background-color .3s;
+}
+
+.mat-btn > * {
+  position: relative;
+}
+
+.mat-btn span {
+  display: block;
+  padding: 12px 24px;
+}
+
+.mat-btn:before {
+  content: "";
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  
+  display: block;
+  width: 0;
+  padding-top: 0;
+    
+  border-radius: 100%;
+  
+  background-color: rgba(236, 240, 241, .3);
+  
+  transform: translate(-50%, -50%);
+}
+
+.mat-btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+  
+  transition: width .2s ease-out, padding-top .2s ease-out;
+}
+
 
 /****************************/
 /** Themes (compatible IE) **/
@@ -169,11 +227,11 @@ body {
 
 body.dark {
 	background-color: #232330;
-	color: #D9C9F7;
+	color: #D9E9D7
 }
 
 body.dark .jc-role-user {
-	background-color: #624213;
+	background-color: #124283;
 }
 
 body.dark.jc-role-assistant {
@@ -208,4 +266,14 @@ body.dark .jc-message button:hover {
 
 body.dark .jc-message button:active {
   background-color: #a9a9a9;
+}
+
+body.dark .jc-clear-btn {
+	background: #a31700;
+	color: #D9E9D7
+}
+
+body.dark .jc-tell-btn {
+	background: #328233;
+	color: #D9E9D7
 }

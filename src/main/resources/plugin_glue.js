@@ -17,9 +17,9 @@ var plugin_clear = function() {
 }
 
 var plugin_tell = function(text) {
-	jc.appendChat({"role":"user", "content":text})
+	jc._appendChat({"role":"user", "content":text})
 	setTimeout(function(){
-		jc.appendChat({"role":"assistant", "content":"@@waiting@@I'm reading you"})
+		jc._appendChat({"role":"assistant", "content":"@@waiting@@I'm reading you"})
 		setTimeout(function(){
 			if (simulate_jc_change("@@waiting@@I think about it")) {
 				setTimeout(function(){

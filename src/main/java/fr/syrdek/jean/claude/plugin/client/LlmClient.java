@@ -15,7 +15,14 @@ public interface LlmClient {
    * 
    * @param onChange The listener to register.
    */
-  void setHistoryListener(final HistoryChangeListener onChange);
+  void setHistoryListener(final LlmHistoryChangeListener onChange);
+
+  /**
+   * Listens for LLM errors.
+   * 
+   * @param onError The listener to register.
+   */
+  void setErrorListener(final LlmErrorListener onError);
 
   /**
    * Asks for a chat prediction. This action should trigger the historyChangeListener registered.

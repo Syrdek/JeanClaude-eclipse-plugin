@@ -12,7 +12,7 @@ import fr.syrdek.jean.claude.plugin.client.ollama.OllamaMessage;
  * 
  * @author cedric
  */
-public interface HistoryChangeListener {
+public interface LlmHistoryChangeListener {
 
   /**
    * Notifies that the chat history changed.
@@ -20,11 +20,4 @@ public interface HistoryChangeListener {
    * @param chatHistory The new chat history.
    */
   void onChange(List<OllamaMessage> chatHistory);
-
-  /**
-   * Notifies that an error occurred.
-   * 
-   * @param error The error.
-   */
-  void onError(String error);
 }
