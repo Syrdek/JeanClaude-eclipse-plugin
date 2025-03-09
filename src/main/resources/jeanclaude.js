@@ -27,7 +27,7 @@ var jc = {
 		this._addTextareaHook();
 
 		this.clear();
-		this._appendChat({ "role": "assistant", "content": "Hello, I'm Jean-Claude. Nice to eet you." });
+		this._appendChat({ "role": "assistant", "content": "Hello, I'm Jean-Claude. Nice to meet you." });
 	},
 
 	clear: function() {
