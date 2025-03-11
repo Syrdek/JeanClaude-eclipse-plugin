@@ -91,29 +91,15 @@ var jc = {
 		}
 	},
 
-	replaceAll: function(text, search, replacement) {
-		if (text.replaceAll) {
-			return text.relaceAll(search, replacement);
-		}
-		// For IE10 compatibility...
-		let newText = text.replace(search, replacement);
-		while (newText != text) {
-			text = newText;
-			newText = text.replace(search, replacement);
-		}
-		return newText
-	},
-
 	escapeHtml: function(unsafe) {
-		return this.replaceAll(
-			this.replaceAll(
-				this.replaceAll(
-					this.replaceAll(
-						this.replaceAll(unsafe, '&', '&amp;'),
-						'<', '&lt;'),
-					'>', '&gt;'),
-				'"', '&quot;'),
-			"'", '&#039;');
+//		if (unsafe.replaceAll) {
+//			return unsafe.replaceAll('&', '&amp;')
+//			.replaceAll('<', '&lt;')
+//			.replaceAll('>', '&gt;')
+//			.replaceAll('"', '&quot;')
+//			.replaceAll("'", '&#039;');
+//		}
+		return unsafe.replace("<think>", "&lt;think&gt;").replace("</think>", "&lt;/think&gt;");
 	},
 
 	_appendChat: function(message) {
