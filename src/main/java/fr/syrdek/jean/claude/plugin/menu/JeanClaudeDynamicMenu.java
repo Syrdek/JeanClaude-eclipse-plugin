@@ -9,7 +9,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
@@ -52,7 +51,7 @@ public class JeanClaudeDynamicMenu extends ContributionItem {
 
     int i = 0;
     for (JeanClaudeAction action : config.actions) {
-      final MenuItem menuItem = new MenuItem(menu, SWT.CHECK, i++);
+      final MenuItem menuItem = new MenuItem(menu, 0, i++);
       menuItem.setText(action.title);
       menuItem.addSelectionListener(new SelectionAdapter() {
         public void widgetSelected(SelectionEvent e) {

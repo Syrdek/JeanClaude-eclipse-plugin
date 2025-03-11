@@ -1,9 +1,12 @@
 {
+	"waitMessage":"Sending request, and waiting for a life's sign...",
+	"reflectionMessage":"Request received. I'm thinking about it...",
+	"hideReflection":true,
 	"actions":[
 		{
 			"title": "Explain",
 			"template": "Explain the following code:\n```\n[SELECTED_TEXT]\n```\n",
-			"model": "deepseek-r1"
+			"model": "deepseek-r1:latest"
 		},
 		{
 			"title": "Comment",

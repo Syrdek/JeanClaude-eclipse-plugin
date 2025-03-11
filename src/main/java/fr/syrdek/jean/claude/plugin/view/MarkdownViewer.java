@@ -21,11 +21,12 @@ public class MarkdownViewer {
   public MarkdownViewer(Composite parent, int style, final String theme) {
     browser = new Browser(parent, style);
     browser.setJavascriptEnabled(true);
-    System.out.println("THEME !!!!!!!!!!!! " + String.valueOf(theme));
+
     if ("light".equals(theme)) {
       packager.addFileReplacement(Pattern.compile("dark.min.css"), "light.min.css");
       packager.addFileReplacement(Pattern.compile("jc-dark.css"), "jc-light.css");
     }
+
     packager.addFileReplacement(Pattern.compile("plugin_glue.js"), "");
     browser.setText(packager.singleFileHtml("main.htm"), true);
 

@@ -20,8 +20,17 @@ import fr.syrdek.jean.claude.plugin.view.ChatView;
  */
 public class JcController {
   private static LlmClient CLIENT;
+  private static ChatView view;
+
   static {
     setConfiguration(Activator.getConfiguration());
+  }
+
+  public synchronized static ChatView getView() {
+    if (view == null) {
+      view = activateChatView();
+    }
+    return view;
   }
 
   public static ChatView activateChatView() {
@@ -49,15 +58,15 @@ public class JcController {
       CLIENT.stop();
     }
 
-    CLIENT = new OllamaClient(config.url, config.defaultModel);
+    CLIENT = new OllamaClient(config);
     CLIENT.setErrorListener((String error) -> Display.getDefault().asyncExec(() -> {
-      activateChatView().setError(error);
+      getView().setError(error);
     }));
     CLIENT.setHistoryListener((List<OllamaMessage> chatHistory) -> {
       Display.getDefault().asyncExec(() -> {
-        activateChatView().setConversationHistory(chatHistory);
+        getView().setConversationHistory(chatHistory);
       });
     });
-    activateChatView().applyTheme(config.theme);
+    getView().applyTheme(config.theme);
   }
 }

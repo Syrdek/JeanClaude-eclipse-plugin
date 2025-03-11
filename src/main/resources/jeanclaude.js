@@ -23,11 +23,10 @@ var jc = {
 		} else {
 			this._setUseHljs(true);
 		}
-		
+
 		this._addTextareaHook();
 
 		this.clear();
-		this._appendChat({ "role": "assistant", "content": "Hello, I'm Jean-Claude. Nice to meet you." });
 	},
 
 	clear: function() {
@@ -37,7 +36,7 @@ var jc = {
 
 		this.history = [];
 	},
-	
+
 	applyTheme: function(theme) {
 		document.body.className = "";
 		document.body.classList.add(theme);
@@ -67,7 +66,7 @@ var jc = {
 			this._scrollToBottom();
 		}
 	},
-	
+
 	setError: function(message) {
 		let wasScrolledBotton = this._isScrolledToBottom();
 
@@ -78,18 +77,43 @@ var jc = {
 		node.setAttribute("role", message["role"]);
 		node.classList.add("jc-message");
 		node.classList.add("jc-role-error");
-		
+
 		let contentNode = document.createElement("div");
 		contentNode.classList.add("jc-content");
 		contentNode.innerHTML = "<p>" + message + "</p>";
 		node.appendChild(contentNode);
-		
+
 		this._addFoldBox(node);
 		this.div.appendChild(node);
 
 		if (wasScrolledBotton) {
 			this._scrollToBottom();
 		}
+	},
+
+	replaceAll: function(text, search, replacement) {
+		if (text.replaceAll) {
+			return text.relaceAll(search, replacement);
+		}
+		// For IE10 compatibility...
+		let newText = text.replace(search, replacement);
+		while (newText != text) {
+			text = newText;
+			newText = text.replace(search, replacement);
+		}
+		return newText
+	},
+
+	escapeHtml: function(unsafe) {
+		return this.replaceAll(
+			this.replaceAll(
+				this.replaceAll(
+					this.replaceAll(
+						this.replaceAll(unsafe, '&', '&amp;'),
+						'<', '&lt;'),
+					'>', '&gt;'),
+				'"', '&quot;'),
+			"'", '&#039;');
 	},
 
 	_appendChat: function(message) {
@@ -112,7 +136,7 @@ var jc = {
 			}
 		});
 	},
-	
+
 	_isScrolledToBottom: function() {
 		return Math.abs(this.div.scrollHeight - this.div.clientHeight - this.div.scrollTop) < 1
 	},
@@ -169,7 +193,7 @@ var jc = {
 	},
 
 	_escapeMarkdown: function(message) {
-		return this.markdownConverter.makeHtml(message);
+		return this.markdownConverter.makeHtml(this.escapeHtml(message));
 	},
 
 	_setUseHljs: function(use) {

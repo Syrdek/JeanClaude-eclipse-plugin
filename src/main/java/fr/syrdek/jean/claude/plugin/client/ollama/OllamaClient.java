@@ -26,6 +26,7 @@ import fr.syrdek.jean.claude.plugin.client.LlmErrorListener;
 import fr.syrdek.jean.claude.plugin.client.LlmHistoryChangeListener;
 import fr.syrdek.jean.claude.plugin.client.RuntimeHttpException;
 import fr.syrdek.jean.claude.plugin.client.ollama.OllamaMessage.OllamaRole;
+import fr.syrdek.jean.claude.plugin.config.JeanClaudeConfig;
 
 /**
  * Client interrogeant un backend ollama.
@@ -35,7 +36,6 @@ public class OllamaClient implements LlmClient {
   private final Gson gson = new Gson();
   private final HttpClient client = HttpClient.newBuilder().build();
   private volatile boolean stop = false;
-  private final String defaultModel;
 
   private BlockingQueue<OllamaRequest> questionsQueue = new LinkedBlockingQueue<OllamaRequest>();
   private Thread backgroundWorker = null;
@@ -43,18 +43,16 @@ public class OllamaClient implements LlmClient {
   private List<OllamaMessage> history = new ArrayList<OllamaMessage>();
   private LlmHistoryChangeListener historyChangeListener;
   private LlmErrorListener errorsListener;
-  private String url;
+  private JeanClaudeConfig config;
 
   /**
    * Creates a client calling the specified url.
    * 
-   * @param url          The URL to call.
-   * @param defaultModel
+   * @param config The current configuration.
    */
-  public OllamaClient(final String url, String defaultModel) {
-    System.out.println("Building Ollama client with URL: " + url + " and model: " + defaultModel);
-    this.defaultModel = defaultModel;
-    this.url = url;
+  public OllamaClient(final JeanClaudeConfig config) {
+    System.out.println("Building Ollama client with URL: " + config.url + " and model: " + config.defaultModel);
+    this.config = config;
     start();
   }
 
@@ -65,7 +63,7 @@ public class OllamaClient implements LlmClient {
 
   @Override
   public void ask(final String msg) {
-    ask(msg, this.defaultModel);
+    ask(msg, config.defaultModel);
   }
 
   @Override
@@ -105,23 +103,36 @@ public class OllamaClient implements LlmClient {
           continue;
         }
 
-        recordAssistantResponse("@@Waiting@@Sending request, and waiting far aknowledgement...");
+        recordAssistantResponse("@@Waiting@@" + config.waitMessage);
 
         try {
-          filterThinkingModel(
-              aggregatedStream(
-                  postRequest(gson.toJson(request))
-                      .body()
-                      // Convertit l'objet en OllamaResponse.
-                      .map((String txt) -> gson.fromJson(txt, OllamaResponse.class))
-                      .filter(Objects::nonNull)
-                      // Récupère le contenu du message.
-                      .map((OllamaResponse r) -> r.message.content)),
-              "@@Waiting@@Request received. I'm thinking about it...")
-                  .forEachOrdered(this::recordAssistantResponse);
+          Stream<String> aggregatedStream = aggregatedStream(
+              postRequest(gson.toJson(request))
+                  .body()
+                  // Convertit l'objet en OllamaResponse.
+                  .map((String txt) -> gson.fromJson(txt, OllamaResponse.class))
+                  .filter(Objects::nonNull)
+                  // Récupère le contenu du message.
+                  .map((OllamaResponse r) -> r.message.content));
+
+          if (config.hideReflection) {
+            aggregatedStream = filterThinkingModel(
+                aggregatedStream,
+                "@@Waiting@@" + config.reflectionMessage);
+          }
+
+          aggregatedStream.forEachOrdered(this::recordAssistantResponse);
         } catch (RuntimeException e) {
           e.printStackTrace();
-          notifyError(e.getMessage());
+          final StringBuilder messageBuilder = new StringBuilder();
+          messageBuilder.append(e.toString());
+
+          Throwable t = e.getCause();
+          while (t != null) {
+            messageBuilder.append("\nCaused by ").append(t.toString());
+            t = t.getCause();
+          }
+          notifyError(messageBuilder.toString());
         }
       }
     } catch (InterruptedException e) {
@@ -182,8 +193,8 @@ public class OllamaClient implements LlmClient {
    */
   private HttpResponse<Stream<String>> postRequest(final String json) {
     try {
-      System.out.println("Ollama request to " + url + "/api/chat : " + json);
-      final HttpRequest request = HttpRequest.newBuilder(URI.create(url + "/api/chat"))
+      System.out.println("Ollama request to " + config.url + "/api/chat : " + json);
+      final HttpRequest request = HttpRequest.newBuilder(URI.create(config.url + "/api/chat"))
           .header("Content-Type", "application/json")
           .POST(BodyPublishers.ofString(json))
           .build();
@@ -207,7 +218,11 @@ public class OllamaClient implements LlmClient {
   }
 
   public static void main(String args[]) throws Throwable {
-    final OllamaClient client = new OllamaClient("http://localhost:11434", "deepseek-r1:14b");
+    final JeanClaudeConfig config = new JeanClaudeConfig();
+    config.url = "http://localhost:11434";
+    config.defaultModel = "deepseek-r1:14b";
+
+    final OllamaClient client = new OllamaClient(config);
     final Gson gson = new Gson();
     client.setErrorListener((String error) -> {
       System.out.println("ERROR: " + error);

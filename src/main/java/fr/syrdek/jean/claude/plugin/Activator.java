@@ -6,8 +6,6 @@ package fr.syrdek.jean.claude.plugin;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
-import com.google.gson.Gson;
-
 import fr.syrdek.jean.claude.plugin.config.JeanClaudeConfig;
 import fr.syrdek.jean.claude.plugin.pref.PreferenceConstants;
 
@@ -30,10 +28,11 @@ public class Activator extends AbstractUIPlugin {
 
   public static JeanClaudeConfig getConfiguration() {
     final IPreferenceStore store = getDefault().getPreferenceStore();
-    final JeanClaudeConfig config = new Gson().fromJson(store.getString(PreferenceConstants.CONFIG_PARAM), JeanClaudeConfig.class);
-    config.url = store.getString(PreferenceConstants.URL_PARAM);
-    config.defaultModel = store.getString(PreferenceConstants.MODEL_PARAM);
-    config.theme = store.getString(PreferenceConstants.THEME_PARAM);
+    final JeanClaudeConfig config = JeanClaudeConfig.parse(store.getString(PreferenceConstants.CONFIG_PARAM));
+    config.url = store.getString(PreferenceConstants.URL_PARAM).trim();
+    config.defaultModel = store.getString(PreferenceConstants.MODEL_PARAM).trim();
+    config.theme = store.getString(PreferenceConstants.THEME_PARAM).trim();
+    System.out.println("Configuration created : " + config);
     return config;
   }
 }

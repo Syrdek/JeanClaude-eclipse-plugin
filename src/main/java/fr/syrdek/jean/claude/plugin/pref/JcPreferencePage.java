@@ -51,8 +51,9 @@ public class JcPreferencePage
 
   @Override
   public boolean performOk() {
+    boolean ok = super.performOk();
     JcController.setConfiguration(Activator.getConfiguration());
-    return super.performOk();
+    return ok;
   }
 
 }
