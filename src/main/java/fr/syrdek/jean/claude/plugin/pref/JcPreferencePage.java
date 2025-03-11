@@ -32,17 +32,13 @@ public class JcPreferencePage
    */
   public void createFieldEditors() {
     addField(
-        new StringFieldEditor(PreferenceConstants.P_URL, "JeanClaude URL", getFieldEditorParent()));
+        new StringFieldEditor(PreferenceConstants.URL_PARAM, PreferenceConstants.URL_DESC, getFieldEditorParent()));
     addField(
-        new StringFieldEditor(PreferenceConstants.P_TYPE, "Backend type (ollama / gradio)", getFieldEditorParent()));
+        new StringFieldEditor(PreferenceConstants.MODEL_PARAM, PreferenceConstants.MODEL_DESC, getFieldEditorParent()));
     addField(
-        new StringFieldEditor(PreferenceConstants.P_EXPLAIN_TPL, "Explain template", getFieldEditorParent()));
+        new StringFieldEditor(PreferenceConstants.THEME_PARAM, PreferenceConstants.THEME_DESC, getFieldEditorParent()));
     addField(
-        new StringFieldEditor(PreferenceConstants.P_COMMENT_TPL, "Comment template", getFieldEditorParent()));
-    addField(
-        new StringFieldEditor(PreferenceConstants.P_TEST_TPL, "Test template", getFieldEditorParent()));
-    addField(
-        new StringFieldEditor(PreferenceConstants.P_CHECK_TPL, "Check template", getFieldEditorParent()));
+        new JeanClaudeJsonFieldEditor(PreferenceConstants.CONFIG_PARAM, PreferenceConstants.CONFIG_DESC, getFieldEditorParent()));
   }
 
   /*
@@ -55,7 +51,7 @@ public class JcPreferencePage
 
   @Override
   public boolean performOk() {
-    JcController.setUrl(getPreferenceStore().getString(PreferenceConstants.P_URL), getPreferenceStore().getString(PreferenceConstants.P_TYPE));
+    JcController.setConfiguration(Activator.getConfiguration());
     return super.performOk();
   }
 

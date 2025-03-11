@@ -32,6 +32,14 @@ public interface LlmClient {
   void ask(String msg);
 
   /**
+   * Asks for a chat prediction. This action should trigger the historyChangeListener registered.
+   * 
+   * @param msg   The message to send.
+   * @param model The name of a specific model ti use for this request.
+   */
+  void ask(String msg, String model);
+
+  /**
    * Clears conversation history. This action should trigger the historyChangeListener registered.
    */
   void clearHistory();

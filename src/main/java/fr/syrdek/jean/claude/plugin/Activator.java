@@ -3,8 +3,12 @@
  */
 package fr.syrdek.jean.claude.plugin;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import com.google.gson.Gson;
+
+import fr.syrdek.jean.claude.plugin.config.JeanClaudeConfig;
 import fr.syrdek.jean.claude.plugin.pref.PreferenceConstants;
 
 /**
@@ -24,27 +28,12 @@ public class Activator extends AbstractUIPlugin {
     return activator;
   }
 
-  public static String getUrl() {
-    return getDefault().getPreferenceStore().getString(PreferenceConstants.P_URL);
-  }
-
-  public static String getType() {
-    return getDefault().getPreferenceStore().getString(PreferenceConstants.P_TYPE);
-  }
-
-  public static String getExplainPhrase(final String code) {
-    return getDefault().getPreferenceStore().getString(PreferenceConstants.P_EXPLAIN_TPL).replace("[SELECTED_TEXT]", code);
-  }
-
-  public static String getCommentPhrase(final String code) {
-    return getDefault().getPreferenceStore().getString(PreferenceConstants.P_COMMENT_TPL).replace("[SELECTED_TEXT]", code);
-  }
-
-  public static String getTestPhrase(final String code) {
-    return getDefault().getPreferenceStore().getString(PreferenceConstants.P_TEST_TPL).replace("[SELECTED_TEXT]", code);
-  }
-
-  public static String getCheckPhrase(final String code) {
-    return getDefault().getPreferenceStore().getString(PreferenceConstants.P_CHECK_TPL).replace("[SELECTED_TEXT]", code);
+  public static JeanClaudeConfig getConfiguration() {
+    final IPreferenceStore store = getDefault().getPreferenceStore();
+    final JeanClaudeConfig config = new Gson().fromJson(store.getString(PreferenceConstants.CONFIG_PARAM), JeanClaudeConfig.class);
+    config.url = store.getString(PreferenceConstants.URL_PARAM);
+    config.defaultModel = store.getString(PreferenceConstants.MODEL_PARAM);
+    config.theme = store.getString(PreferenceConstants.THEME_PARAM);
+    return config;
   }
 }

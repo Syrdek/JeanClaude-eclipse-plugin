@@ -1,26 +1,26 @@
 package fr.syrdek.jean.claude.plugin.pref;
 
+import fr.syrdek.jean.claude.plugin.view.HtmlPackager;
+
 /**
  * Constant definitions for plug-in preferences
  */
 public class PreferenceConstants {
 
-  public static final String P_URL = "jeanclaudeUrl";
-  public static final String DEFAULT_URL = "http://localhost:7890";
+  public static final String URL_PARAM = "jeanclaudeUrl";
+  public static final String URL_DESC = "Ollama backend URL";
+  public static final String URL_DEFAULT = "http://localhost:11434";
 
-  public static final String P_TYPE = "jeanclaudeType";
-  public static final String DEFAULT_TYPE = "ollama"; // ollama/gradio
+  public static final String MODEL_PARAM = "jeanclaudeDefaultModel";
+  public static final String MODEL_DESC = "Ollama default model";
+  public static final String MODEL_DEFAULT = "deepseek-r1";
 
-  public static final String P_EXPLAIN_TPL = "explainTpl";
-  public static final String DEFAULT_EXPLAIN_TPL = "Explique le code suivant : ```[SELECTED_TEXT]```";
+  public static final String THEME_PARAM = "jeanclaudeTheme";
+  public static final String THEME_DESC = "View theme (dark or light)";
+  public static final String THEME_DEFAULT = "dark";
 
-  public static final String P_COMMENT_TPL = "commentTpl";
-  public static final String DEFAULT_COMMENT_TPL = "Réécris le code suivant en y ajoutant des commentaires en français pour le rendre compréhensible : ```[SELECTED_TEXT]```";
-
-  public static final String P_TEST_TPL = "testTpl";
-  public static final String DEFAULT_TEST_TPL = "Construit les tests unitaires permettant de vérifier au mieux le fonctionnement de ce code : ```[SELECTED_TEXT]```";
-
-  public static final String P_CHECK_TPL = "checkTpl";
-  public static final String DEFAULT_CHECK_TPL = "Vérifie le code suivant afin de détecter les vulnérabilités potentielles : ```[SELECTED_TEXT]```";
+  public static final String CONFIG_PARAM = "jeanclaudeConfig";
+  public static final String CONFIG_DESC = "Menu configuration";
+  public static final String CONFIG_DEFAULT = HtmlPackager.getResourceFileAsString("defaultConfig.json");
 
 }

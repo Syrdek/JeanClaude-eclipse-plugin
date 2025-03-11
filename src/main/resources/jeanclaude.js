@@ -37,6 +37,11 @@ var jc = {
 
 		this.history = [];
 	},
+	
+	applyTheme: function(theme) {
+		document.body.className = "";
+		document.body.classList.add(theme);
+	},
 
 	setChat: function(messages) {
 		let wasScrolledBotton = this._isScrolledToBottom();

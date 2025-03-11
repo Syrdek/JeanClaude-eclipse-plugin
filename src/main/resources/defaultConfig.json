@@ -1,0 +1,25 @@
+{
+	"actions":[
+		{
+			"title": "Explain",
+			"template": "Explain the following code:\n```\n[SELECTED_TEXT]\n```\n",
+			"model": "deepseek-r1"
+		},
+		{
+			"title": "Comment",
+			"template": "Rewrite the following code by adding comments to make it understandable:\n```\n[SELECTED_TEXT]\n```\n"
+		},
+		{
+			"title": "Test",
+			"template": "Builds unit tests to best verify the functioning of this code:\n```\n[SELECTED_TEXT]\n```\n"
+		},
+		{
+			"title": "Check",
+			"template": "Check the following code for bugs and potential vulnerabilities:\n```\n[SELECTED_TEXT]\n```\n"
+		},
+		{
+			"title": "Optimize",
+			"template": "Rewrite the following code to make it more readable and efficient:\n```\n[SELECTED_TEXT]\n```\n"
+		}
+	]
+}

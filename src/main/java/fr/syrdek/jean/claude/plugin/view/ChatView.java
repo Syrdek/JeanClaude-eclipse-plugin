@@ -12,6 +12,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import com.google.gson.Gson;
 
+import fr.syrdek.jean.claude.plugin.Activator;
 import fr.syrdek.jean.claude.plugin.client.ollama.OllamaMessage;
 
 public class ChatView extends ViewPart {
@@ -31,11 +32,15 @@ public class ChatView extends ViewPart {
     final FillLayout fillLayout = new FillLayout(SWT.VERTICAL);
     parent.setLayout(fillLayout);
 
-    markdown = new MarkdownViewer(parent, SWT.MULTI);
+    markdown = new MarkdownViewer(parent, SWT.MULTI, Activator.getConfiguration().theme);
   }
 
   public void setConversationHistory(final List<OllamaMessage> messages) {
     markdown.setConversationHistory(gson.toJson(messages));
+  }
+
+  public void applyTheme(final String theme) {
+    markdown.applyTheme(theme);
   }
 
   @Override

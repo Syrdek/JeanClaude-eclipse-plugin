@@ -12,6 +12,7 @@ import org.eclipse.ui.PlatformUI;
 import fr.syrdek.jean.claude.plugin.client.LlmClient;
 import fr.syrdek.jean.claude.plugin.client.ollama.OllamaClient;
 import fr.syrdek.jean.claude.plugin.client.ollama.OllamaMessage;
+import fr.syrdek.jean.claude.plugin.config.JeanClaudeConfig;
 import fr.syrdek.jean.claude.plugin.view.ChatView;
 
 /**
@@ -20,7 +21,7 @@ import fr.syrdek.jean.claude.plugin.view.ChatView;
 public class JcController {
   private static LlmClient CLIENT;
   static {
-    setUrl(Activator.getUrl(), Activator.getType());
+    setConfiguration(Activator.getConfiguration());
   }
 
   public static ChatView activateChatView() {
@@ -31,7 +32,7 @@ public class JcController {
     }
   }
 
-  public static void predict(final String predict) {
+  public static void ask(final String predict) {
     CLIENT.ask(predict);
   }
 
@@ -39,32 +40,16 @@ public class JcController {
     CLIENT.clearHistory();
   }
 
-  public static void explainCode(final String code) {
-    predict(Activator.getExplainPhrase(code));
-  }
-
-  public static void commenterCode(final String code) {
-    predict(Activator.getCommentPhrase(code));
-  }
-
-  public static void genererTest(final String code) {
-    predict(Activator.getTestPhrase(code));
-  }
-
-  public static void verifierCode(String code) {
-    predict(Activator.getCheckPhrase(code));
-  }
-
   private JcController() {
     super();
   }
 
-  public static void setUrl(String url, String type) {
+  public static void setConfiguration(final JeanClaudeConfig config) {
     if (CLIENT != null) {
       CLIENT.stop();
     }
 
-    CLIENT = new OllamaClient(url);
+    CLIENT = new OllamaClient(config.url, config.defaultModel);
     CLIENT.setErrorListener((String error) -> Display.getDefault().asyncExec(() -> {
       activateChatView().setError(error);
     }));
@@ -73,5 +58,6 @@ public class JcController {
         activateChatView().setConversationHistory(chatHistory);
       });
     });
+    activateChatView().applyTheme(config.theme);
   }
 }

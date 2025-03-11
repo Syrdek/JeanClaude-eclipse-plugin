@@ -1,0 +1,63 @@
+
+/*********************************/
+/** Themes DARK (compatible IE) **/
+/*********************************/
+
+body {
+	background-color: #232330;
+	color: #D9E9D7
+}
+
+body .jc-role-user {
+	background-color: #124283;
+}
+
+body .jc-role-assistant {
+	background-color: #525263;
+}
+
+body .jc-role-warn {
+	color: #322263;
+	background-color: #f37c00;
+}
+
+body .jc-role-error {
+	color: #322263;
+	background-color: #f31c00;
+}
+
+body .jc-waiting {
+  background: linear-gradient(90deg, #525263 20%, #828283 40%, #828283 60%, #525263 80%);
+  background-size: 400% 100%;
+  background-position: 0% 50%;
+}
+
+body .jc-message button {
+  background-color: #a9a9a9;
+  box-shadow: 2px 2px 4px black;
+}
+
+body .jc-message button:hover {
+  background-color: #c9c9c9;
+  opacity: 80%;
+}
+
+body .jc-message button:active {
+  background-color: #a9a9a9;
+}
+
+body .jc-clear-btn {
+	background: #a31700;
+	color: #D9E9D7
+}
+
+body .jc-tell-btn {
+	background: #124283;
+	color: #D9E9D7
+}
+
+body .jc-controls textarea {
+	background-color: #525263;
+	border: 1px solid #322263;
+	color: #D9E9D7
+}

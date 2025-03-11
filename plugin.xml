@@ -59,5 +59,14 @@
             class="fr.syrdek.jean.claude.plugin.pref.PreferenceInitializer">
       </initializer>
    </extension>
+   
+   <extension point="org.eclipse.ui.menus">
+  <menuContribution locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+    <menu id="jeanClaude.dynamicMenus" label="Jean-Claude">
+      <dynamic class="fr.syrdek.jean.claude.plugin.menu.JeanClaudeDynamicMenu" id="jeanClaude.dynamicMenu">
+      </dynamic>
+    </menu>
+  </menuContribution>
+</extension>
 
 </plugin>

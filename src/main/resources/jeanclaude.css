@@ -1,6 +1,4 @@
 body {
-	background-color: #232330;
-	color: #D9E9D7;
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
@@ -49,23 +47,11 @@ body {
 	overflow: auto;
 }
 
-.jc-role-user {
-	background-color: #124283;
-}
-
-.jc-role-assistant {
-	background-color: #525263;
-}
-
 .jc-role-warn {
-	color: #322263;
-	background-color: #f37c00;
 	font-weight: bold;
 }
 
 .jc-role-error {
-	color: #322263;
-	background-color: #f31c00;
 	font-weight: bold;
 }
 
@@ -86,7 +72,6 @@ body {
 /** Boutons         **/
 /*********************/
 .jc-message button {
-  background-color: #a9a9a9;
   box-shadow: 2px 2px 4px black;
   padding: 2px;
   opacity: 50%;
@@ -97,15 +82,6 @@ body {
   cursor: pointer;
   transform: rotate(0deg);
   transition: transform 2s ease;
-}
-
-.jc-message button:hover {
-  background-color: #c9c9c9;
-  opacity: 80%;
-}
-
-.jc-message button:active {
-  background-color: #a9a9a9;
 }
 
 .jc-message button svg {
@@ -134,10 +110,7 @@ body {
 	resize: none;
 	width: 100%;
 	height: 80px;
-	background-color: #525263;
-	border: 1px solid #322263;
 	border-radius: 5px;
-	color: #D9E9D7
 }
 
 .jc-buttons-bar {
@@ -152,16 +125,6 @@ body {
 .jc-buttons-bar>*{
 	flex: 1;
 	border-radius: 5px;
-}
-
-.jc-clear-btn {
-	background: #a31700;
-	color: #D9E9D7;
-}
-
-.jc-tell-btn {
-	background: #328233;
-	color: #D9E9D7;
 }
 
 
@@ -218,62 +181,4 @@ body {
   padding-top: 120%;
   
   transition: width .2s ease-out, padding-top .2s ease-out;
-}
-
-
-/****************************/
-/** Themes (compatible IE) **/
-/****************************/
-
-body.dark {
-	background-color: #232330;
-	color: #D9E9D7
-}
-
-body.dark .jc-role-user {
-	background-color: #124283;
-}
-
-body.dark.jc-role-assistant {
-	background-color: #525263;
-}
-
-body.dark .jc-role-warn {
-	color: #322263;
-	background-color: #f37c00;
-}
-
-body.dark .jc-role-error {
-	color: #322263;
-	background-color: #f31c00;
-}
-
-body.dark .jc-waiting {
-  background: linear-gradient(90deg, #525263 20%, #828283 40%, #828283 60%, #525263 80%);
-  background-size: 400% 100%;
-  background-position: 0% 50%;
-}
-
-body.dark .jc-message button {
-  background-color: #a9a9a9;
-  box-shadow: 2px 2px 4px black;
-}
-
-body.dark .jc-message button:hover {
-  background-color: #c9c9c9;
-  opacity: 80%;
-}
-
-body.dark .jc-message button:active {
-  background-color: #a9a9a9;
-}
-
-body.dark .jc-clear-btn {
-	background: #a31700;
-	color: #D9E9D7
-}
-
-body.dark .jc-tell-btn {
-	background: #328233;
-	color: #D9E9D7
 }

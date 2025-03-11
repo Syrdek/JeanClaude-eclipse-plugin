@@ -18,9 +18,14 @@ public class MarkdownViewer {
   private final HtmlPackager packager = new HtmlPackager();
   private final Browser browser;
 
-  public MarkdownViewer(Composite parent, int style) {
+  public MarkdownViewer(Composite parent, int style, final String theme) {
     browser = new Browser(parent, style);
     browser.setJavascriptEnabled(true);
+    System.out.println("THEME !!!!!!!!!!!! " + String.valueOf(theme));
+    if ("light".equals(theme)) {
+      packager.addFileReplacement(Pattern.compile("dark.min.css"), "light.min.css");
+      packager.addFileReplacement(Pattern.compile("jc-dark.css"), "jc-light.css");
+    }
     packager.addFileReplacement(Pattern.compile("plugin_glue.js"), "");
     browser.setText(packager.singleFileHtml("main.htm"), true);
 
@@ -55,6 +60,9 @@ public class MarkdownViewer {
     return browser;
   }
 
+  public void applyTheme(String theme) {
+  }
+
   public void setError(String message) {
     browser.evaluate("jc.setError(\"" + message.replace("\"", "\\\"") + "\")", true);
   }
@@ -65,7 +73,7 @@ public class MarkdownViewer {
 
   private void tell(final String text) {
     System.out.println("Javascript hook : Tell" + text);
-    JcController.predict(text);
+    JcController.ask(text);
   }
 
   private void clear() {

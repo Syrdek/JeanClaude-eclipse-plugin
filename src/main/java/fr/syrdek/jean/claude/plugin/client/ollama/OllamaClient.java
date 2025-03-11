@@ -34,8 +34,8 @@ public class OllamaClient implements LlmClient {
 
   private final Gson gson = new Gson();
   private final HttpClient client = HttpClient.newBuilder().build();
-  private final String ollamaModel = "deepseek-r1:14b";
   private volatile boolean stop = false;
+  private final String defaultModel;
 
   private BlockingQueue<OllamaRequest> questionsQueue = new LinkedBlockingQueue<OllamaRequest>();
   private Thread backgroundWorker = null;
@@ -48,10 +48,12 @@ public class OllamaClient implements LlmClient {
   /**
    * Creates a client calling the specified url.
    * 
-   * @param url The URL to call.
+   * @param url          The URL to call.
+   * @param defaultModel
    */
-  public OllamaClient(final String url) {
-    System.out.println("Building Ollama client with URL: " + url);
+  public OllamaClient(final String url, String defaultModel) {
+    System.out.println("Building Ollama client with URL: " + url + " and model: " + defaultModel);
+    this.defaultModel = defaultModel;
     this.url = url;
     start();
   }
@@ -63,10 +65,15 @@ public class OllamaClient implements LlmClient {
 
   @Override
   public void ask(final String msg) {
+    ask(msg, this.defaultModel);
+  }
+
+  @Override
+  public void ask(final String msg, final String model) {
     history.add(new OllamaMessage(msg));
     notifyChange();
 
-    questionsQueue.offer(new OllamaRequest(ollamaModel, Collections.unmodifiableList(history)));
+    questionsQueue.offer(new OllamaRequest(model, Collections.unmodifiableList(history)));
   }
 
   @Override
@@ -200,7 +207,7 @@ public class OllamaClient implements LlmClient {
   }
 
   public static void main(String args[]) throws Throwable {
-    final OllamaClient client = new OllamaClient("http://localhost:11434");
+    final OllamaClient client = new OllamaClient("http://localhost:11434", "deepseek-r1:14b");
     final Gson gson = new Gson();
     client.setErrorListener((String error) -> {
       System.out.println("ERROR: " + error);

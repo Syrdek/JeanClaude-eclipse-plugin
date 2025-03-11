@@ -1,0 +1,62 @@
+/**********************************/
+/** Themes LIGHT (compatible IE) **/
+/**********************************/
+
+body {
+	background-color: #E9E9E7;
+	color: #232330
+}
+
+body .jc-role-user {
+	background-color: #5292D3;
+}
+
+body .jc-role-assistant {
+	background-color: #c2c2c3;
+}
+
+body .jc-role-warn {
+	color: #232330;
+	background-color: #f37c00;
+}
+
+body .jc-role-error {
+	color: #232330;
+	background-color: #f31c00;
+}
+
+body .jc-waiting {
+  background: linear-gradient(90deg, #c2c2c3 20%, #e2e2e3 40%, #e2e2e3 60%, #c2c2c3 80%);
+  background-size: 400% 100%;
+  background-position: 0% 50%;
+}
+
+body .jc-message button {
+  background-color: #a9a9a9;
+  box-shadow: 2px 2px 4px black;
+}
+
+body .jc-message button:hover {
+  background-color: #c9c9c9;
+  opacity: 80%;
+}
+
+body .jc-message button:active {
+  background-color: #a9a9a9;
+}
+
+body .jc-clear-btn {
+	background: #f36760;
+	color: #232330
+}
+
+body .jc-tell-btn {
+	background: #5292D3;
+	color: #232330
+}
+
+body .jc-controls textarea {
+	background-color: #c2c2c3;
+	border: 1px solid #322263;
+	color: #232330
+}
